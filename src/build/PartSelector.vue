@@ -1,6 +1,13 @@
 <template>
   <div :class="[position, 'part']">
-    <img :src="selectedPart.src" title="arm" />
+    <router-link
+      :to="{
+        name: 'Parts',
+        params: { partType: selectedPart.type, id: selectedPart.id }
+      }"
+    >
+      <img :src="selectedPart.src" title="arm" />
+    </router-link>
     <button @click="selectPreviousPart" class="prev-selector"></button>
     <button @click="selectNextPart" class="next-selector"></button>
     <span class="sale" v-show="selectedPart.onSale">Sale!</span>
@@ -63,6 +70,15 @@ export default {
         this.parts.length,
       );
     },
+    showPartInfo() {
+      this.$router.push({
+        name: 'Parts',
+        params: {
+          partType: this.selectedPart.type,
+          id: this.selectedPart.id,
+        },
+      });
+    },
   },
 };
 </script>
@@ -70,11 +86,12 @@ export default {
 <style lang="scss" scoped>
 .part {
   position: relative;
-  width:165px;
-  height:165px;
+  width: 165px;
+  height: 165px;
   border: 3px solid #aaa;
   img {
-    width:165px;
+    width: 165px;
+    cursor: pointer;
   }
 }
 .prev-selector {
